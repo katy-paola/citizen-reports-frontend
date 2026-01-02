@@ -1,0 +1,27 @@
+import type React from "react";
+import { useDeleteReport } from "../hooks/useDeleteReport";
+
+export default function DeleteConfirmationModal({
+  showModal,
+  openId,
+  setOpenId,
+}: {
+  showModal: boolean;
+  openId: number;
+  setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
+}) {
+  const { mutate: deleteReport } = useDeleteReport(openId);
+
+  const handleDelete = () => {
+    deleteReport();
+  };
+
+  return (
+    <dialog open={showModal}>
+      <p>Are you sure you want to delete this report?</p>
+      <p>This action cannot be undone.</p>
+      <button onClick={handleDelete}>Yes, delete</button>
+      <button onClick={() => setOpenId(null)}>No, cancel</button>
+    </dialog>
+  );
+}
