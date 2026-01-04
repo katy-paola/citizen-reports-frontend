@@ -17,6 +17,9 @@ export default function CreateReportModal() {
           setTitle("");
           setDescription("");
         },
+        onError: () => {
+          
+        }
       }
     );
   };

@@ -3,21 +3,35 @@ import { useUpdateReport } from "../hooks/useUpdateReport";
 import { type Status } from "../types";
 
 export default function UpdateReportModal({
-  id,
+  showModal,
+  openId,
+  setOpenId,
   status,
 }: {
-  id: number;
+  showModal: boolean;
+  openId: number;
+  setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
   status: Status;
 }) {
-  return <UpdateReportForm reportId={id} reportStatus={status} />;
+  return (
+    <dialog open={showModal}>
+      <UpdateReportForm
+        reportId={openId}
+        reportStatus={status}
+        setOpenId={setOpenId}
+      />
+    </dialog>
+  );
 }
 
 function UpdateReportForm({
   reportId,
   reportStatus,
+  setOpenId,
 }: {
   reportId: number;
   reportStatus: Status;
+  setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
   const { mutate: update, isPending, isError } = useUpdateReport(reportId);
   const [status, setStatus] = useState<Status>(reportStatus);
@@ -33,6 +47,8 @@ function UpdateReportForm({
         },
       }
     );
+
+    setOpenId(null);
   };
 
   return (
@@ -55,6 +71,9 @@ function UpdateReportForm({
 
       <button type="submit" disabled={isPending}>
         {isPending ? "Saving..." : "Save"}
+      </button>
+      <button type="button" onClick={() => setOpenId(null)}>
+        Close
       </button>
 
       {isError && <p>Something went wrong</p>}

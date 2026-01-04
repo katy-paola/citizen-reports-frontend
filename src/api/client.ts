@@ -20,7 +20,7 @@ client.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       tokenStorage.clear();
-      window.location.href = "/login";
+      console.log(error);
     }
 
     return Promise.reject(error);

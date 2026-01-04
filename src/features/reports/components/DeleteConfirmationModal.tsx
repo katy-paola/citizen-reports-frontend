@@ -14,6 +14,7 @@ export default function DeleteConfirmationModal({
 
   const handleDelete = () => {
     deleteReport();
+    setOpenId(null);
   };
 
   return (

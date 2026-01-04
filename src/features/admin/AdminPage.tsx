@@ -6,12 +6,14 @@ import type { ReportEntity } from "../reports/types";
 import { useState } from "react";
 import UpdateReportModal from "../reports/components/UpdateReportModal";
 import DeleteConfirmationModal from "../reports/components/DeleteConfirmationModal";
+import { useLogout } from "../auth/hooks/useLogout";
 
 export const AdminPage = () => {
+  const logout = useLogout();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = getPageFromUrl(searchParams.get("page"));
   const limit = 10;
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [reportToUpdateId, setReportToUpdateId] = useState<number | null>(null);
   const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
 
   const { data, isLoading, error } = useGetReports(page, limit);
@@ -31,6 +33,7 @@ export const AdminPage = () => {
         As admin, you cannot create any report, you can only update them and
         delete them.
       </p>
+      <button onClick={logout}>Logout</button>
       <small>
         Showing {data?.reports.length} of {data?.meta.total} reports
       </small>
@@ -59,13 +62,18 @@ export const AdminPage = () => {
             <p>{report.description}</p>
             <div>
               <p>Status: {report.status}</p>
-              <button onClick={() => setShowUpdateModal(!showUpdateModal)}>
+              <button onClick={() => setReportToUpdateId(report.id)}>
                 Edit
               </button>
             </div>
-            {showUpdateModal && (
-              <UpdateReportModal id={report.id} status={report.status} />
-            )}
+
+            <UpdateReportModal
+              showModal={reportToUpdateId === report.id}
+              openId={report.id}
+              setOpenId={setReportToUpdateId}
+              status={report.status}
+            />
+
             <small>{formatDate(report.createdAt)}</small>
             <button onClick={() => setReportToDeleteId(report.id)}>
               Delete report
