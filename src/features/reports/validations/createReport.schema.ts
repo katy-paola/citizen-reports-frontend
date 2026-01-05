@@ -1,4 +1,3 @@
-// features/reports/schemas/createReport.schema.ts
 import { z } from "zod";
 
 export const createReportSchema = z.object({

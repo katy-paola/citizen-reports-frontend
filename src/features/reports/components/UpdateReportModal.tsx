@@ -1,6 +1,11 @@
-import { useState } from "react";
 import { useUpdateReport } from "../hooks/useUpdateReport";
 import { type Status } from "../types";
+import { useForm } from "react-hook-form";
+import {
+  updateReportSchema,
+  type UpdateReportForm,
+} from "../validations/updateReport.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function UpdateReportModal({
   showModal,
@@ -34,39 +39,33 @@ function UpdateReportForm({
   setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
   const { mutate: update, isPending, isError } = useUpdateReport(reportId);
-  const [status, setStatus] = useState<Status>(reportStatus);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UpdateReportForm>({
+    resolver: zodResolver(updateReportSchema),
+    mode: "onSubmit",
+  });
 
-    update(
-      { status },
-      {
-        onSuccess: (updatedReport) => {
-          setStatus(updatedReport.status);
-        },
-      }
-    );
+  const onSubmit = (data: UpdateReportForm) => {
+    update({ status: data.status });
 
     setOpenId(null);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2>Update report</h2>
 
       <div>
-        <select
-          name="status"
-          id="status"
-          value={status}
-          onChange={(e) => setStatus(e.target.value as Status)}
-          required
-        >
+        <select {...register("status")} defaultValue={reportStatus}>
           <option value="pending">Pending</option>
           <option value="process">Process</option>
           <option value="resolved">Resolved</option>
         </select>
+        {errors.status && <p>{errors.status.message}</p>}
       </div>
 
       <button type="submit" disabled={isPending}>
