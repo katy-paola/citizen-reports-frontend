@@ -1,27 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "./hooks/useLogin";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { loginSchema, type LoginForm } from "./validations/login.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export const LoginPage = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const login = useLogin();
+  const { mutate: login, isPending } = useLogin();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+    mode: "onSubmit",
+  });
 
-    login.mutate(
+  const onSubmit = (data: LoginForm) => {
+    login(
       {
-        email: form.get("email") as string,
-        password: form.get("password") as string,
+        email: data.email,
+        password: data.password,
       },
       {
         onSuccess: () => {
           navigate("/admin");
-        },
-        onError: (e) => {
-          setErrorMessage(e.response.data.message);
         },
       }
     );
@@ -30,12 +34,13 @@ export const LoginPage = () => {
   return (
     <section>
       <a href="/reports">Back to reports</a>
-      <form onSubmit={handleSubmit}>
-        <input name="email" />
-        <input name="password" type="password" />
-        <button disabled={login.isPending}>Login</button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="email" {...register("email")} />
+        {errors.email && <p>{errors.email.message}</p>}
+        <input type="password" {...register("password")} />
+        {errors.password && <p>{errors.password.message}</p>}
+        <button disabled={isPending}>Login</button>
       </form>
-      {errorMessage !== "" && <p>{errorMessage}</p>}
     </section>
   );
 };
