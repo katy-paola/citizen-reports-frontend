@@ -10,7 +10,7 @@ export default function DeleteConfirmationModal({
   openId: number;
   setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
-  const { mutate: deleteReport } = useDeleteReport(openId);
+  const { mutate: deleteReport, isPending } = useDeleteReport(openId);
 
   const handleDelete = () => {
     deleteReport();
@@ -21,7 +21,9 @@ export default function DeleteConfirmationModal({
     <dialog open={showModal}>
       <p>Are you sure you want to delete this report?</p>
       <p>This action cannot be undone.</p>
-      <button onClick={handleDelete}>Yes, delete</button>
+      <button onClick={handleDelete} disabled={isPending}>
+        {isPending ? "Deleting..." : "Yes, Delete"}
+      </button>
       <button onClick={() => setOpenId(null)}>No, cancel</button>
     </dialog>
   );

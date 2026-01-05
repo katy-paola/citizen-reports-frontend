@@ -50,9 +50,7 @@ function UpdateReportForm({
   });
 
   const onSubmit = (data: UpdateReportForm) => {
-    update({ status: data.status });
-
-    setOpenId(null);
+    update({ status: data.status }, { onSuccess: () => setOpenId(null) });
   };
 
   return (

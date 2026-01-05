@@ -20,14 +20,13 @@ export const ReportsPage = () => {
       <Reports.Header>
         <h1>Reports</h1>
         <a href="/login">Are you an admin? Log in here.</a>
-        <button onClick={() => setShowCreateModal(!showCreateModal)}>
+        <button onClick={() => setShowCreateModal(true)}>
           Create new report
         </button>
-        {showCreateModal && (
-          <div>
-            <CreateReportModal />
-          </div>
-        )}
+        <CreateReportModal
+          showModal={showCreateModal}
+          setShowModal={setShowCreateModal}
+        />
       </Reports.Header>
       <Reports.Content>
         <ReportsPagination />
