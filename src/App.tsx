@@ -7,7 +7,6 @@ import { AdminPage } from "./features/admin/AdminPage";
 
 import { AdminRoute } from "./shared/AdminRoute";
 import { NonAdminRoute } from "./shared/NonAdminRoute";
-import { GuestOnlyRoute } from "./shared/GuestOnlyRoute";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +25,7 @@ function App() {
             <Route path="/admin" element={<AdminPage />} />
           </Route>
 
-          <Route element={<GuestOnlyRoute />}>
+          <Route element={<NonAdminRoute />}>
             <Route path="/login" element={<LoginPage />} />
           </Route>
         </Routes>
