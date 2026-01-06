@@ -1,4 +1,5 @@
 import { usePaginatedReports } from "../hooks/usePaginatedReports";
+import Button from "./Button";
 
 export default function ReportsPagination() {
   const { pagination } = usePaginatedReports();
@@ -12,17 +13,17 @@ export default function ReportsPagination() {
       </small>
       {totalPages > 1 && (
         <div>
-          <button
+          <Button
             onClick={() => handlePageChange(page === 1 ? totalPages : page - 1)}
           >
-            Prev
-          </button>
+            Previous
+          </Button>
           <span> Page {page} </span>
-          <button
+          <Button
             onClick={() => handlePageChange(page === totalPages ? 1 : page + 1)}
           >
             Next
-          </button>
+          </Button>
         </div>
       )}
     </>

@@ -8,6 +8,7 @@ import { Reports } from "../../shared/components/Reports";
 import { Report } from "../../shared/components/ReportItem";
 import ReportsPagination from "../../shared/components/ReportsPagination";
 import { usePaginatedReports } from "../../shared/hooks/usePaginatedReports";
+import Button from "../../shared/components/Button";
 
 export const AdminPage = () => {
   const logout = useLogout();
@@ -29,7 +30,7 @@ export const AdminPage = () => {
             As admin, you cannot create any report, you can only update them and
             delete them.
           </p>
-          <button onClick={logout}>Logout</button>
+          <Button handleClick={logout}>Logout</Button>
         </Reports.Header>
         <Reports.Content>
           <ReportsPagination />
@@ -40,9 +41,9 @@ export const AdminPage = () => {
                 <Report.Description>{report.description}</Report.Description>
                 <div>
                   <Report.Status>{report.status}</Report.Status>
-                  <button onClick={() => setReportToUpdateId(report.id)}>
+                  <Button onClick={() => setReportToUpdateId(report.id)}>
                     Edit
-                  </button>
+                  </Button>
                 </div>
                 <UpdateReportModal
                   showModal={reportToUpdateId === report.id}
@@ -51,9 +52,9 @@ export const AdminPage = () => {
                   status={report.status}
                 />
                 <Report.Date>{formatDate(report.createdAt)}</Report.Date>
-                <button onClick={() => setReportToDeleteId(report.id)}>
+                <Button onClick={() => setReportToDeleteId(report.id)}>
                   Delete report
-                </button>
+                </Button>
                 <DeleteConfirmationModal
                   showModal={reportToDeleteId === report.id}
                   openId={report.id}

@@ -6,6 +6,7 @@ import {
   type UpdateReportForm,
 } from "../validations/updateReport.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Button from "../../../shared/components/Button";
 
 export default function UpdateReportModal({
   showModal,
@@ -66,12 +67,12 @@ function UpdateReportForm({
         {errors.status && <p>{errors.status.message}</p>}
       </div>
 
-      <button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         {isPending ? "Saving..." : "Save"}
-      </button>
-      <button type="button" onClick={() => setOpenId(null)}>
+      </Button>
+      <Button type="button" onClick={() => setOpenId(null)}>
         Close
-      </button>
+      </Button>
 
       {isError && <p>Something went wrong</p>}
     </form>

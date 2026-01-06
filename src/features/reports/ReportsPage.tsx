@@ -6,6 +6,7 @@ import { Reports } from "../../shared/components/Reports";
 import { usePaginatedReports } from "../../shared/hooks/usePaginatedReports";
 import ReportsPagination from "../../shared/components/ReportsPagination";
 import { Report } from "../../shared/components/ReportItem";
+import Button from "../../shared/components/Button";
 
 export const ReportsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -20,9 +21,9 @@ export const ReportsPage = () => {
       <Reports.Header>
         <h1>Reports</h1>
         <a href="/login">Are you an admin? Log in here.</a>
-        <button onClick={() => setShowCreateModal(true)}>
+        <Button onClick={() => setShowCreateModal(true)}>
           Create new report
-        </button>
+        </Button>
         <CreateReportModal
           showModal={showCreateModal}
           setShowModal={setShowCreateModal}

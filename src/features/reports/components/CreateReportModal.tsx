@@ -5,6 +5,7 @@ import {
   type CreateReportForm,
 } from "../validations/createReport.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Button from "../../../shared/components/Button";
 
 export default function CreateReportModal({
   showModal,
@@ -60,12 +61,12 @@ function CreateReportForm({
         {errors.description && <p>{errors.description.message}</p>}
       </div>
 
-      <button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending}>
         {isPending ? "Creating..." : "Create"}
-      </button>
-      <button type="button" onClick={() => setShowModal(false)}>
+      </Button>
+      <Button type="button" onClick={() => setShowModal(false)}>
         Close
-      </button>
+      </Button>
 
       {isError && <p>Something went wrong</p>}
     </form>
