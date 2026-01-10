@@ -8,11 +8,15 @@ import { Form } from "../../shared/components/FormWrapper";
 import { Input } from "../../shared/components/Input";
 
 export const LoginPage = () => {
-  const { mutate: login, isPending } = useLogin();
+  const { mutate: login, isPending, error } = useLogin();
   const navigate = useNavigate();
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
     mode: "onSubmit",
   });
 
@@ -68,6 +72,7 @@ export const LoginPage = () => {
           <Button disabled={isPending}>Login</Button>
         </form>
       </Form>
+      {error && <p>{error.response.data.message}</p>}
     </section>
   );
 };

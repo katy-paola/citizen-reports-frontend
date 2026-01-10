@@ -4,6 +4,6 @@ interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   handleClick?: () => void;
 }
 
-export default function Button(props: ButtonProps) {
-  return <button onClick={props.handleClick} {...props} />;
+export default function Button({ handleClick, ...props }: ButtonProps) {
+  return <button onClick={handleClick} {...props} />;
 }
