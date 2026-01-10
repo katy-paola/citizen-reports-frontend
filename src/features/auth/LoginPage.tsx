@@ -4,16 +4,14 @@ import { useForm } from "react-hook-form";
 import { loginSchema, type LoginForm } from "./validations/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../shared/components/Button";
+import { Form } from "../../shared/components/FormWrapper";
+import { Input } from "../../shared/components/Input";
 
 export const LoginPage = () => {
   const { mutate: login, isPending } = useLogin();
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginForm>({
+  const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     mode: "onSubmit",
   });
@@ -35,13 +33,41 @@ export const LoginPage = () => {
   return (
     <section>
       <a href="/reports">← Back to reports</a>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="email" {...register("email")} />
-        {errors.email && <p>{errors.email.message}</p>}
-        <input type="password" {...register("password")} />
-        {errors.password && <p>{errors.password.message}</p>}
-        <Button disabled={isPending}>Login</Button>
-      </form>
+      <Form form={form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Form.Field
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <Form.Item>
+                <Form.Label>Email</Form.Label>
+                <Form.Control>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="example@gmail.com"
+                  />
+                </Form.Control>
+                <Form.Message />
+              </Form.Item>
+            )}
+          />
+          <Form.Field
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <Form.Item>
+                <Form.Label>Password</Form.Label>
+                <Form.Control>
+                  <Input {...field} type="password" placeholder="********" />
+                </Form.Control>
+                <Form.Message />
+              </Form.Item>
+            )}
+          />
+          <Button disabled={isPending}>Login</Button>
+        </form>
+      </Form>
     </section>
   );
 };
