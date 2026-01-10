@@ -7,6 +7,8 @@ import {
 } from "../validations/updateReport.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../../shared/components/Button";
+import { Form } from "../../../shared/components/FormWrapper";
+import { Select } from "../../../shared/components/Select";
 
 export default function UpdateReportModal({
   showModal,
@@ -41,13 +43,12 @@ function UpdateReportForm({
 }) {
   const { mutate: update, isPending, isError } = useUpdateReport(reportId);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UpdateReportForm>({
+  const form = useForm<UpdateReportForm>({
     resolver: zodResolver(updateReportSchema),
-    mode: "onSubmit",
+    defaultValues: {
+      status: reportStatus,
+    },
+    mode: "onBlur",
   });
 
   const onSubmit = (data: UpdateReportForm) => {
@@ -55,26 +56,37 @@ function UpdateReportForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Update report</h2>
+    <Form form={form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <h2>Update report</h2>
 
-      <div>
-        <select {...register("status")} defaultValue={reportStatus}>
-          <option value="pending">Pending</option>
-          <option value="process">Process</option>
-          <option value="resolved">Resolved</option>
-        </select>
-        {errors.status && <p>{errors.status.message}</p>}
-      </div>
+        <Form.Field
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <Form.Item>
+              <Form.Label>Status</Form.Label>
+              <Form.Control>
+                <Select {...field}>
+                  <Select.Option value="pending">Pending</Select.Option>
+                  <Select.Option value="process">Process</Select.Option>
+                  <Select.Option value="resolved">Resolved</Select.Option>
+                </Select>
+              </Form.Control>
+              <Form.Message />
+            </Form.Item>
+          )}
+        />
 
-      <Button type="submit" disabled={isPending}>
-        {isPending ? "Saving..." : "Save"}
-      </Button>
-      <Button type="button" onClick={() => setOpenId(null)}>
-        Close
-      </Button>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? "Saving..." : "Save"}
+        </Button>
+        <Button type="button" onClick={() => setOpenId(null)}>
+          Close
+        </Button>
 
-      {isError && <p>Something went wrong</p>}
-    </form>
+        {isError && <p>Something went wrong</p>}
+      </form>
+    </Form>
   );
 }
