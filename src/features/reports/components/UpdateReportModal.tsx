@@ -84,7 +84,13 @@ function UpdateReportForm({
         <Button type="button" onClick={() => setOpenId(null)}>
           Close
         </Button>
-
+        <Button
+          type="button"
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => form.reset()}
+        >
+          Clear
+        </Button>
         {isError && <p>Something went wrong</p>}
       </form>
     </Form>
