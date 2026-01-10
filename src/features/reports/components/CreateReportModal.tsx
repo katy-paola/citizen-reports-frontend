@@ -93,7 +93,13 @@ function CreateReportForm({
           <Button type="button" onClick={() => setShowModal(false)}>
             Close
           </Button>
-
+          <Button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => form.reset()}
+          >
+            Clear
+          </Button>
           {isError && <p>Something went wrong</p>}
         </form>
       </Form>
