@@ -6,6 +6,8 @@ import {
 } from "../validations/createReport.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../../shared/components/Button";
+import { Form } from "../../../shared/components/FormWrapper";
+import Input from "../../../shared/components/Input";
 
 export default function CreateReportModal({
   showModal,
@@ -28,13 +30,13 @@ function CreateReportForm({
 }) {
   const { mutate: create, isPending, isError } = useCreateReport();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateReportForm>({
+  const form = useForm<CreateReportForm>({
     resolver: zodResolver(createReportSchema),
-    mode: "onSubmit",
+    defaultValues: {
+      title: "",
+      description: "",
+    },
+    mode: "onBlur",
   });
 
   const onSubmit = (data: CreateReportForm) => {
@@ -48,27 +50,75 @@ function CreateReportForm({
     );
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Create report</h2>
+    <>
+      <Form form={form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Form.Field
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <Form.Item>
+                <Form.Label>Title</Form.Label>
+                <Form.Control>
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder="Noise disturbance at night"
+                  />
+                </Form.Control>
+                <Form.Message />
+              </Form.Item>
+            )}
+          />
+          <Form.Field
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <Form.Item>
+                <Form.Label>Description</Form.Label>
+                <Form.Control>
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder="Loud music from a nearby business continues late into the night."
+                  />
+                </Form.Control>
+                <Form.Message />
+              </Form.Item>
+            )}
+          />
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Creating..." : "Create"}
+          </Button>
+          <Button type="button" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
 
-      <div>
-        <input type="text" placeholder="Title" {...register("title")} />
-        {errors.title && <p>{errors.title.message}</p>}
-      </div>
+          {isError && <p>Something went wrong</p>}
+        </form>
+      </Form>
+      {/*  <form onSubmit={handleSubmit(onSubmit)}>
+        <h2>Create report</h2>
 
-      <div>
-        <textarea placeholder="Description" {...register("description")} />
-        {errors.description && <p>{errors.description.message}</p>}
-      </div>
+        <div>
+          <input type="text" placeholder="Title" {...register("title")} />
+          {errors.title && <p>{errors.title.message}</p>}
+        </div>
 
-      <Button type="submit" disabled={isPending}>
-        {isPending ? "Creating..." : "Create"}
-      </Button>
-      <Button type="button" onClick={() => setShowModal(false)}>
-        Close
-      </Button>
+        <div>
+          <textarea placeholder="Description" {...register("description")} />
+          {errors.description && <p>{errors.description.message}</p>}
+        </div>
 
-      {isError && <p>Something went wrong</p>}
-    </form>
+        <Button type="submit" disabled={isPending}>
+          {isPending ? "Creating..." : "Create"}
+        </Button>
+        <Button type="button" onClick={() => setShowModal(false)}>
+          Close
+        </Button>
+
+        {isError && <p>Something went wrong</p>}
+      </form> */}
+    </>
   );
 }
