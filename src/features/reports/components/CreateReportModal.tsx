@@ -97,28 +97,6 @@ function CreateReportForm({
           {isError && <p>Something went wrong</p>}
         </form>
       </Form>
-      {/*  <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Create report</h2>
-
-        <div>
-          <input type="text" placeholder="Title" {...register("title")} />
-          {errors.title && <p>{errors.title.message}</p>}
-        </div>
-
-        <div>
-          <textarea placeholder="Description" {...register("description")} />
-          {errors.description && <p>{errors.description.message}</p>}
-        </div>
-
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Creating..." : "Create"}
-        </Button>
-        <Button type="button" onClick={() => setShowModal(false)}>
-          Close
-        </Button>
-
-        {isError && <p>Something went wrong</p>}
-      </form> */}
     </>
   );
 }
