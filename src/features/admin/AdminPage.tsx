@@ -17,6 +17,7 @@ export const AdminPage = () => {
   const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
 
   const { data, isLoading, isError } = usePaginatedReports();
+  const reports = data?.reports ?? [];
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading reports</div>;
@@ -35,7 +36,7 @@ export const AdminPage = () => {
         <Reports.Content>
           <ReportsPagination />
           <ul>
-            {data?.reports.map((report: ReportEntity) => (
+            {reports.map((report: ReportEntity) => (
               <Report key={report.id}>
                 <Report.Title>{report.title}</Report.Title>
                 <Report.Description>{report.description}</Report.Description>
@@ -45,12 +46,7 @@ export const AdminPage = () => {
                     Edit
                   </Button>
                 </div>
-                <UpdateReportModal
-                  showModal={reportToUpdateId === report.id}
-                  openId={report.id}
-                  setOpenId={setReportToUpdateId}
-                  status={report.status}
-                />
+
                 <Report.Date>{formatDate(report.createdAt)}</Report.Date>
                 <Button onClick={() => setReportToDeleteId(report.id)}>
                   Delete report
@@ -63,6 +59,11 @@ export const AdminPage = () => {
               </Report>
             ))}
           </ul>
+          <UpdateReportModal
+            reportId={reportToUpdateId}
+            onClose={() => setReportToUpdateId(null)}
+            reports={reports}
+          />
         </Reports.Content>
       </Reports>
     </div>
