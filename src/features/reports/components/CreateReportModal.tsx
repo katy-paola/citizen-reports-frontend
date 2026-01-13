@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../../shared/components/Button";
 import { Form } from "../../../shared/components/FormWrapper";
 import { Input } from "../../../shared/components/Input";
+import { Dialog } from "../../../shared/components/Dialog";
+import { useDialog } from "../../../shared/context/dialogContext";
 
 export default function CreateReportModal({
   showModal,
@@ -17,17 +19,14 @@ export default function CreateReportModal({
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <dialog open={showModal}>
-      <CreateReportFormUI setShowModal={setShowModal} />
-    </dialog>
+    <Dialog shouldOpen={showModal} onOpenChange={setShowModal}>
+      <CreateReportFormUI />
+    </Dialog>
   );
 }
 
-function CreateReportFormUI({
-  setShowModal,
-}: {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function CreateReportFormUI() {
+  const { close } = useDialog();
   const { mutate: create, isPending, isError } = useCreateReport();
 
   const form = useForm<CreateReportForm>({
@@ -36,16 +35,14 @@ function CreateReportFormUI({
       title: "",
       description: "",
     },
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   const onSubmit = (data: CreateReportForm) => {
     create(
       { title: data.title, description: data.description },
       {
-        onSuccess: () => {
-          setShowModal(false);
-        },
+        onSuccess: close,
       }
     );
   };
@@ -89,14 +86,10 @@ function CreateReportFormUI({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Creating..." : "Create"}
         </Button>
-        <Button type="button" onClick={() => setShowModal(false)}>
+        <Button type="button" onClick={close}>
           Close
         </Button>
-        <Button
-          type="button"
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={() => form.reset()}
-        >
+        <Button type="button" onClick={() => form.reset()}>
           Clear
         </Button>
         {isError && <p>Something went wrong</p>}
