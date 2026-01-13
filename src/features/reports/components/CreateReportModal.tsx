@@ -18,12 +18,12 @@ export default function CreateReportModal({
 }) {
   return (
     <dialog open={showModal}>
-      <CreateReportForm setShowModal={setShowModal} />
+      <CreateReportFormUI setShowModal={setShowModal} />
     </dialog>
   );
 }
 
-function CreateReportForm({
+function CreateReportFormUI({
   setShowModal,
 }: {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;

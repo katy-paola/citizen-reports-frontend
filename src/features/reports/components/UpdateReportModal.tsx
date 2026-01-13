@@ -23,7 +23,7 @@ export default function UpdateReportModal({
 }) {
   return (
     <dialog open={showModal}>
-      <UpdateReportForm
+      <UpdateReportFormUI
         reportId={openId}
         reportStatus={status}
         setOpenId={setOpenId}
@@ -32,7 +32,7 @@ export default function UpdateReportModal({
   );
 }
 
-function UpdateReportForm({
+function UpdateReportFormUI({
   reportId,
   reportStatus,
   setOpenId,
