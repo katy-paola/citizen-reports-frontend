@@ -26,8 +26,3 @@ export interface CreateReportDto {
 export interface UpdateReportDto {
   status: Status;
 }
-
-export type UpdateReportVariables = {
-  id: number;
-  status: Status;
-};
