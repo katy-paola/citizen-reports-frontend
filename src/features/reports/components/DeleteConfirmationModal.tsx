@@ -1,31 +1,49 @@
-import type React from "react";
 import { useDeleteReport } from "../hooks/useDeleteReport";
 import Button from "../../../shared/components/Button";
+import { Dialog } from "../../../shared/components/Dialog";
+import { useDialog } from "../../../shared/context/dialogContext";
 
 export default function DeleteConfirmationModal({
-  showModal,
-  openId,
-  setOpenId,
+  reportId,
+  onClose,
 }: {
-  showModal: boolean;
-  openId: number;
-  setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
+  reportId: number | null;
+  onClose: () => void;
 }) {
-  const { mutate: deleteReport, isPending } = useDeleteReport(openId);
+  if (reportId === null) return null;
+
+  return (
+    <Dialog
+      shouldOpen={true}
+      onOpenChange={(shouldOpen) => !shouldOpen && onClose()}
+    >
+      <DeleteConfirmationContent reportId={reportId} />
+    </Dialog>
+  );
+}
+
+function DeleteConfirmationContent({ reportId }: { reportId: number }) {
+  const { close } = useDialog();
+  const { mutate: deleteReport, isPending } = useDeleteReport(reportId);
 
   const handleDelete = () => {
-    deleteReport();
-    setOpenId(null);
+    deleteReport(undefined, {
+      onSuccess: close,
+    });
   };
 
   return (
-    <dialog open={showModal}>
+    <div>
       <p>Are you sure you want to delete this report?</p>
       <p>This action cannot be undone.</p>
+
       <Button onClick={handleDelete} disabled={isPending}>
         {isPending ? "Deleting..." : "Yes, Delete"}
       </Button>
-      <Button onClick={() => setOpenId(null)}>No, cancel</Button>
-    </dialog>
+
+      <Button type="button" onClick={close}>
+        No, cancel
+      </Button>
+    </div>
   );
 }

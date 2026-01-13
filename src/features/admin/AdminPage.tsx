@@ -51,11 +51,6 @@ export const AdminPage = () => {
                 <Button onClick={() => setReportToDeleteId(report.id)}>
                   Delete report
                 </Button>
-                <DeleteConfirmationModal
-                  showModal={reportToDeleteId === report.id}
-                  openId={report.id}
-                  setOpenId={setReportToDeleteId}
-                />
               </Report>
             ))}
           </ul>
@@ -63,6 +58,10 @@ export const AdminPage = () => {
             reportId={reportToUpdateId}
             onClose={() => setReportToUpdateId(null)}
             reports={reports}
+          />
+          <DeleteConfirmationModal
+            reportId={reportToDeleteId}
+            onClose={() => setReportToDeleteId(null)}
           />
         </Reports.Content>
       </Reports>

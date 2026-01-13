@@ -7,7 +7,7 @@ export function Dialog({
   children,
 }: {
   shouldOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange: (shouldOpen: boolean) => void;
   children: React.ReactNode;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
