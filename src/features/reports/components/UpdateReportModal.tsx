@@ -1,5 +1,5 @@
 import { useUpdateReport } from "../hooks/useUpdateReport";
-import { type Status } from "../types";
+import { type ReportEntity, type Status } from "../types";
 import { useForm } from "react-hook-form";
 import {
   updateReportSchema,
@@ -9,38 +9,38 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../../shared/components/Button";
 import { Form } from "../../../shared/components/FormWrapper";
 import { Select } from "../../../shared/components/Select";
+import { useDialog } from "../../../shared/context/dialogContext";
+import { Dialog } from "../../../shared/components/Dialog";
 
 export default function UpdateReportModal({
-  showModal,
-  openId,
-  setOpenId,
-  status,
+  reportId,
+  onClose,
+  reports,
 }: {
-  showModal: boolean;
-  openId: number;
-  setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
-  status: Status;
+  reportId: number | null;
+  onClose: () => void;
+  reports: ReportEntity[];
 }) {
+  const report = reports.find((report) => report.id === reportId);
+  if (!report) return null;
   return (
-    <dialog open={showModal}>
-      <UpdateReportFormUI
-        reportId={openId}
-        reportStatus={status}
-        setOpenId={setOpenId}
-      />
-    </dialog>
+    <Dialog
+      shouldOpen={true}
+      onOpenChange={(shouldOpen) => !shouldOpen && onClose()}
+    >
+      <UpdateReportFormUI reportId={report.id} reportStatus={report.status} />
+    </Dialog>
   );
 }
 
 function UpdateReportFormUI({
   reportId,
   reportStatus,
-  setOpenId,
 }: {
   reportId: number;
   reportStatus: Status;
-  setOpenId: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
+  const { close } = useDialog();
   const { mutate: update, isPending, isError } = useUpdateReport(reportId);
 
   const form = useForm<UpdateReportForm>({
@@ -48,11 +48,11 @@ function UpdateReportFormUI({
     defaultValues: {
       status: reportStatus,
     },
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   const onSubmit = (data: UpdateReportForm) => {
-    update({ status: data.status }, { onSuccess: () => setOpenId(null) });
+    update({ status: data.status }, { onSuccess: close });
   };
 
   return (
@@ -81,7 +81,7 @@ function UpdateReportFormUI({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Saving..." : "Save"}
         </Button>
-        <Button type="button" onClick={() => setOpenId(null)}>
+        <Button type="button" onClick={close}>
           Close
         </Button>
         <Button
