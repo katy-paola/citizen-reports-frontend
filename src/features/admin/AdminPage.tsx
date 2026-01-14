@@ -43,7 +43,12 @@ export const AdminPage = () => {
             As admin, you cannot create any report, you can only update them and
             delete them.
           </p>
-          <Button handleClick={logout}>Logout</Button>
+          <Button
+            className="button-secondary button-small"
+            handleClick={logout}
+          >
+            Logout
+          </Button>
         </Reports.Header>
         <Reports.Content>
           <ReportsPagination />
@@ -54,13 +59,19 @@ export const AdminPage = () => {
                 <Report.Description>{report.description}</Report.Description>
                 <div>
                   <Report.Status>{report.status}</Report.Status>
-                  <Button onClick={() => handleUpdateModal(report)}>
+                  <Button
+                    className="button-secondary button-small"
+                    onClick={() => handleUpdateModal(report)}
+                  >
                     Edit
                   </Button>
                 </div>
 
                 <Report.Date>{formatDate(report.createdAt)}</Report.Date>
-                <Button onClick={() => handleDeleteModal(report)}>
+                <Button
+                  className="button-danger button-small"
+                  onClick={() => handleDeleteModal(report)}
+                >
                   Delete report
                 </Button>
               </Report>

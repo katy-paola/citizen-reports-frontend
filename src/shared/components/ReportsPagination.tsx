@@ -14,12 +14,14 @@ export default function ReportsPagination() {
       {totalPages > 1 && (
         <div>
           <Button
+            className="button-secondary button-small"
             onClick={() => handlePageChange(page === 1 ? totalPages : page - 1)}
           >
             Previous
           </Button>
           <span> Page {page} </span>
           <Button
+            className="button-secondary button-small"
             onClick={() => handlePageChange(page === totalPages ? 1 : page + 1)}
           >
             Next

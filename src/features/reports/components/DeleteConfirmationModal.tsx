@@ -48,7 +48,11 @@ function DeleteConfirmationContent({
       <p>Are you sure you want to delete this report?</p>
       <p>This action cannot be undone.</p>
 
-      <Button onClick={handleDelete} disabled={isPending}>
+      <Button
+        className="button-danger"
+        onClick={handleDelete}
+        disabled={isPending}
+      >
         {isPending ? "Deleting..." : "Yes, Delete"}
       </Button>
 

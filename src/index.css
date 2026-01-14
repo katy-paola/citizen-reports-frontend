@@ -1,14 +1,137 @@
 :root {
+  --background: oklab(95.815% 0 -0.00011);
+  --title: oklch(26.033% 0.00003 271.152);
+  --text: oklch(35.233% 0.00004 271.152);
+  --text-error: oklch(43.295% 0.17767 29.223);
+  --text-link: oklch(35.528% 0.15318 270.877);
+  --button-primary: oklch(44.411% 0.1919 261.807);
+  --button-primary-hover: oklch(40.555% 0.1744 261.852);
+  --text-button-primary: oklch(96.416% 0.00011 271.152);
+  --button-secondary: oklch(44.411% 0.1919 261.807 / 0.075);
+  --button-secondary-hover: oklch(44.411% 0.1919 261.807);
+  --text-button-secondary: oklch(44.411% 0.1919 261.807);
+  --text-button-secondary-hover: oklch(96.416% 0.00011 271.152);
+  --button-danger: oklch(43.295% 0.17767 29.223 / 0.075);
+  --button-danger-hover: oklch(43.295% 0.17767 29.223);
+  --text-button-danger: oklch(43.295% 0.17767 29.223);
+  --text-button-danger-hover: oklch(96.416% 0.00011 271.152);
+  --dialog: oklab(90.67% 0 -0.0001);
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: 16px;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--background);
+  color: var(--text);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+a {
+  color: var(--text-link);
+}
+button {
+  color: var(--text-button-primary);
+  background-color: var(--button-primary);
+  border: 1px solid var(--button-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background-color: var(--button-primary-hover);
+}
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+ul {
+  list-style: none;
+}
+h1,
+h2,
+h3 {
+  color: var(--title);
+}
+dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  padding: 1rem;
+  border: none;
+  background-color: var(--dialog);
+  color: var(--text);
+  box-shadow: 1px 1px 4px rgba(128, 128, 128, 0.5);
+
+  /* Animation */
+  --dialog-duration: 160ms;
+
+  transition: opacity var(--dialog-duration) ease-out,
+    scale var(--dialog-duration) ease-out,
+    display var(--dialog-duration) ease-out allow-discrete;
+
+  scale: 0.96;
+  opacity: 0;
+}
+dialog::backdrop {
+  background: rgba(128, 128, 128, 0.5);
+}
+dialog[open]::backdrop {
+  animation: backdrop-in 150ms ease-out;
+}
+
+dialog[open] {
+  opacity: 1;
+  scale: 1;
+
+  @starting-style {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.button-secondary {
+  background-color: var(--button-secondary);
+  color: var(--text-button-secondary);
+  border: 1px solid var(--text-button-secondary);
+}
+.button-secondary:hover {
+  background-color: var(--button-secondary-hover);
+  color: var(--text-button-secondary-hover);
+}
+.button-danger {
+  background-color: var(--button-danger);
+  color: var(--text-button-danger);
+  border: 1px solid var(--text-button-danger);
+}
+.button-danger:hover {
+  background-color: var(--button-danger-hover);
+  color: var(--text-button-danger-hover);
+}
+.button-small {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
 }

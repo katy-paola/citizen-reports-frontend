@@ -29,10 +29,7 @@ export default function UpdateReportModal({
   return (
     <Dialog shouldOpen={showModal} onOpenChange={setShowModal}>
       {report && (
-        <UpdateReportFormUI
-          report={report}
-          reportStatus={report.status}
-        />
+        <UpdateReportFormUI report={report} reportStatus={report.status} />
       )}
     </Dialog>
   );
@@ -94,10 +91,11 @@ function UpdateReportFormUI({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Saving..." : "Save"}
         </Button>
-        <Button type="button" onClick={close}>
+        <Button className="button-secondary" type="button" onClick={close}>
           Close
         </Button>
         <Button
+          className="button-secondary"
           type="button"
           onMouseDown={(e) => e.preventDefault()}
           onClick={() => form.reset()}

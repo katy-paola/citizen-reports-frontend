@@ -86,10 +86,14 @@ function CreateReportFormUI() {
         <Button type="submit" disabled={isPending}>
           {isPending ? "Creating..." : "Create"}
         </Button>
-        <Button type="button" onClick={close}>
+        <Button className="button-secondary" type="button" onClick={close}>
           Close
         </Button>
-        <Button type="button" onClick={() => form.reset()}>
+        <Button
+          className="button-secondary"
+          type="button"
+          onClick={() => form.reset()}
+        >
           Clear
         </Button>
         {isError && <p>Something went wrong</p>}
