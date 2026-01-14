@@ -11,6 +11,7 @@ import { Form } from "../../../shared/components/FormWrapper";
 import { Select } from "../../../shared/components/Select";
 import { useDialog } from "../../../shared/context/dialogContext";
 import { Dialog } from "../../../shared/components/Dialog";
+import { useEffect } from "react";
 
 export default function UpdateReportModal({
   reportId,
@@ -58,6 +59,12 @@ function UpdateReportFormUI({
     },
     mode: "onSubmit",
   });
+
+  useEffect(() => {
+    form.reset({
+      status: report.status,
+    });
+  }, [report, form]);
 
   const onSubmit = (data: UpdateReportForm) => {
     update({ status: data.status }, { onSuccess: close });
