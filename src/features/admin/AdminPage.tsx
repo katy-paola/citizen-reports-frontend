@@ -68,13 +68,13 @@ export const AdminPage = () => {
           </ul>
           <UpdateReportModal
             reportId={reportToUpdateId}
-            setReportId={setReportToUpdateId}
             reports={reports}
             showModal={showUpdateModal}
             setShowModal={setShowUpdateModal}
           />
           <DeleteConfirmationModal
             reportId={reportToDeleteId}
+            reports={reports}
             showModal={showDeleteModal}
             setShowModal={setShowDeleteModal}
           />

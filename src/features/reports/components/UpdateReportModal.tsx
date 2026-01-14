@@ -15,13 +15,11 @@ import { useEffect } from "react";
 
 export default function UpdateReportModal({
   reportId,
-  setReportId,
   reports,
   showModal,
   setShowModal,
 }: {
   reportId: number | null;
-  setReportId: React.Dispatch<React.SetStateAction<number | null>>;
   reports: ReportEntity[];
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +31,6 @@ export default function UpdateReportModal({
       {report && (
         <UpdateReportFormUI
           report={report}
-          setReportId={setReportId}
           reportStatus={report.status}
         />
       )}
@@ -46,7 +43,6 @@ function UpdateReportFormUI({
   reportStatus,
 }: {
   report: ReportEntity;
-  setReportId: React.Dispatch<React.SetStateAction<number | null>>;
   reportStatus: Status;
 }) {
   const { close } = useDialog();
