@@ -42,7 +42,6 @@ export default function UpdateReportModal({
 
 function UpdateReportFormUI({
   report,
-  setReportId,
   reportStatus,
 }: {
   report: ReportEntity;
@@ -59,11 +58,6 @@ function UpdateReportFormUI({
     },
     mode: "onSubmit",
   });
-
-  const handleClose = () => {
-    close();
-    setTimeout(() => setReportId(null), 160);
-  };
 
   const onSubmit = (data: UpdateReportForm) => {
     update({ status: data.status }, { onSuccess: close });
@@ -97,7 +91,7 @@ function UpdateReportFormUI({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Saving..." : "Save"}
         </Button>
-        <Button type="button" onClick={handleClose}>
+        <Button type="button" onClick={close}>
           Close
         </Button>
         <Button
