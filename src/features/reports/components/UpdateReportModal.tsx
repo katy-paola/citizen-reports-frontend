@@ -14,34 +14,43 @@ import { Dialog } from "../../../shared/components/Dialog";
 
 export default function UpdateReportModal({
   reportId,
-  onClose,
+  setReportId,
   reports,
+  showModal,
+  setShowModal,
 }: {
   reportId: number | null;
-  onClose: () => void;
+  setReportId: React.Dispatch<React.SetStateAction<number | null>>;
   reports: ReportEntity[];
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const report = reports.find((report) => report.id === reportId);
-  if (!report) return null;
+
   return (
-    <Dialog
-      shouldOpen={true}
-      onOpenChange={(shouldOpen) => !shouldOpen && onClose()}
-    >
-      <UpdateReportFormUI reportId={report.id} reportStatus={report.status} />
+    <Dialog shouldOpen={showModal} onOpenChange={setShowModal}>
+      {report && (
+        <UpdateReportFormUI
+          report={report}
+          setReportId={setReportId}
+          reportStatus={report.status}
+        />
+      )}
     </Dialog>
   );
 }
 
 function UpdateReportFormUI({
-  reportId,
+  report,
+  setReportId,
   reportStatus,
 }: {
-  reportId: number;
+  report: ReportEntity;
+  setReportId: React.Dispatch<React.SetStateAction<number | null>>;
   reportStatus: Status;
 }) {
   const { close } = useDialog();
-  const { mutate: update, isPending, isError } = useUpdateReport(reportId);
+  const { mutate: update, isPending, isError } = useUpdateReport(report.id);
 
   const form = useForm<UpdateReportForm>({
     resolver: zodResolver(updateReportSchema),
@@ -51,6 +60,11 @@ function UpdateReportFormUI({
     mode: "onSubmit",
   });
 
+  const handleClose = () => {
+    close();
+    setTimeout(() => setReportId(null), 160);
+  };
+
   const onSubmit = (data: UpdateReportForm) => {
     update({ status: data.status }, { onSuccess: close });
   };
@@ -59,6 +73,8 @@ function UpdateReportFormUI({
     <Form form={form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <h2>Update report</h2>
+
+        <h3>{report.title}</h3>
 
         <Form.Field
           control={form.control}
@@ -81,7 +97,7 @@ function UpdateReportFormUI({
         <Button type="submit" disabled={isPending}>
           {isPending ? "Saving..." : "Save"}
         </Button>
-        <Button type="button" onClick={close}>
+        <Button type="button" onClick={handleClose}>
           Close
         </Button>
         <Button
