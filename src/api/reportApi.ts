@@ -12,10 +12,7 @@ export const reportApi = {
       params: { page, limit },
     }),
 
-  getReportById: (id: number) =>
-    client.get<ReportEntity>("/reports", {
-      params: { id },
-    }),
+  getReportById: (id: number) => client.get<ReportEntity>(`/reports/${id}`),
 
   createReport: (payload: CreateReportDto) =>
     client.post<ReportEntity>("/reports", {
