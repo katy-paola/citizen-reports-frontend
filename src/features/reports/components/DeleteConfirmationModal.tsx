@@ -5,19 +5,16 @@ import { useDialog } from "../../../shared/context/dialogContext";
 
 export default function DeleteConfirmationModal({
   reportId,
-  onClose,
+  showModal,
+  setShowModal,
 }: {
   reportId: number | null;
-  onClose: () => void;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  if (reportId === null) return null;
-
   return (
-    <Dialog
-      shouldOpen={true}
-      onOpenChange={(shouldOpen) => !shouldOpen && onClose()}
-    >
-      <DeleteConfirmationContent reportId={reportId} />
+    <Dialog shouldOpen={showModal} onOpenChange={setShowModal}>
+      {reportId && <DeleteConfirmationContent reportId={reportId} />}
     </Dialog>
   );
 }

@@ -16,6 +16,7 @@ export const AdminPage = () => {
   const [reportToUpdateId, setReportToUpdateId] = useState<number | null>(null);
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const { data, isLoading, isError } = usePaginatedReports();
   const reports = data?.reports ?? [];
@@ -23,6 +24,11 @@ export const AdminPage = () => {
   const handleUpdateModal = (report: ReportEntity) => {
     setReportToUpdateId(report.id);
     setShowUpdateModal(true);
+  };
+
+  const handleDeleteModal = (report: ReportEntity) => {
+    setReportToDeleteId(report.id);
+    setShowDeleteModal(true);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -54,7 +60,7 @@ export const AdminPage = () => {
                 </div>
 
                 <Report.Date>{formatDate(report.createdAt)}</Report.Date>
-                <Button onClick={() => setReportToDeleteId(report.id)}>
+                <Button onClick={() => handleDeleteModal(report)}>
                   Delete report
                 </Button>
               </Report>
@@ -69,7 +75,8 @@ export const AdminPage = () => {
           />
           <DeleteConfirmationModal
             reportId={reportToDeleteId}
-            onClose={() => setReportToDeleteId(null)}
+            showModal={showDeleteModal}
+            setShowModal={setShowDeleteModal}
           />
         </Reports.Content>
       </Reports>
