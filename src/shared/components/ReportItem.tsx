@@ -12,8 +12,22 @@ const ReportDescription = (props: ComponentPropsWithoutRef<"p">) => {
   return <p {...props} />;
 };
 
-const ReportStatus = (props: ComponentPropsWithoutRef<"p">) => {
-  return <p {...props} />;
+interface reportStatusProps extends ComponentPropsWithoutRef<"p"> {
+  statusValue: string;
+  className?: string;
+}
+
+const ReportStatus = ({
+  statusValue,
+  className,
+  ...props
+}: reportStatusProps) => {
+  return (
+    <p
+      className={`status ${statusValue}-status ${className ? className : ""}`}
+      {...props}
+    />
+  );
 };
 
 const ReportDate = (props: ComponentPropsWithoutRef<"small">) => {

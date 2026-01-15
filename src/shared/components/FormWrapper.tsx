@@ -70,7 +70,7 @@ const FormMessage = () => {
 
   if (!error || typeof error.message !== "string") return null;
 
-  return <p>{error.message}</p>;
+  return <p className="error-message">{error.message}</p>;
 };
 
 const FormWrapperComponent = Object.assign(FormWrapper, {

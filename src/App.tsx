@@ -1,3 +1,5 @@
+import "./shared/styles/report.css";
+import "./shared/styles/components.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 

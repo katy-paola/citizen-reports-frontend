@@ -36,7 +36,9 @@ export const ReportsPage = () => {
             <Report key={report.id}>
               <Report.Title>{report.title}</Report.Title>
               <Report.Description>{report.description}</Report.Description>
-              <Report.Status>{report.status}</Report.Status>
+              <Report.Status statusValue={report.status}>
+                {report.status}
+              </Report.Status>
               <Report.Date>{formatDate(report.createdAt)}</Report.Date>
             </Report>
           ))}

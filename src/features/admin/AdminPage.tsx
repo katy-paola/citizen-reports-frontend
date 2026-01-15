@@ -58,7 +58,9 @@ export const AdminPage = () => {
                 <Report.Title>{report.title}</Report.Title>
                 <Report.Description>{report.description}</Report.Description>
                 <div>
-                  <Report.Status>{report.status}</Report.Status>
+                  <Report.Status statusValue={report.status}>
+                    {report.status}
+                  </Report.Status>
                   <Button
                     className="button-secondary button-small"
                     onClick={() => handleUpdateModal(report)}

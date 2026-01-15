@@ -1,0 +1,171 @@
+input {
+  padding: 0.5rem;
+  background-color: transparent;
+  color: var(--text);
+  border-radius: 0.2rem;
+  border: 1px solid var(--text);
+  outline: none;
+  font-family: inherit;
+}
+/* Prevent Chrome autofill styles by delaying them indefinitely */
+input:-webkit-autofill {
+  transition: background-color 0s 600000s, color 0s 600000s;
+}
+input:focus {
+  border-color: var(--button-primary);
+}
+input[aria-invalid="true"] {
+  border-color: var(--text-error);
+}
+select,
+::picker(select) {
+  appearance: base-select;
+}
+select {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: transparent;
+  color: var(--text);
+  border-radius: 0.2rem;
+  border: 1px solid var(--text);
+  outline: none;
+  font-family: inherit;
+}
+select:hover,
+select:focus {
+  background: var(--button-secondary);
+  border: 1px solid var(--button-primary);
+}
+select::picker-icon {
+  color: var(--button-primary);
+  transition: 0.4s rotate;
+}
+select:open::picker-icon {
+  rotate: 180deg;
+}
+::picker(select) {
+  border: none;
+  border-radius: 0.2rem;
+  opacity: 0;
+  background-color: var(--background);
+  top: anchor(bottom);
+  transition: all 0.4s allow-discrete;
+}
+option {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  border: 1px solid var(--text);
+  background: var(--option);
+  color: var(--text);
+  padding: 0.5rem;
+  transition: 0.4s;
+}
+option:first-of-type {
+  border-radius: 0.2rem 0.2rem 0 0;
+}
+option:last-of-type {
+  border-radius: 0 0 0.2rem 0.2rem;
+}
+option:not(option:last-of-type) {
+  border-bottom: none;
+}
+option:hover {
+  background: var(--option-hover);
+}
+option:focus {
+  background-color: var(--option-checked);
+}
+option[value="pending"] {
+  background-color: var(--pending);
+}
+option[value="process"] {
+  background-color: var(--process);
+}
+option[value="resolved"] {
+  background-color: var(--resolved);
+}
+option::checkmark {
+  order: 1;
+  margin-left: auto;
+  content: "✓";
+}
+::picker(select):popover-open {
+  opacity: 1;
+}
+@starting-style {
+  ::picker(select):popover-open {
+    opacity: 0;
+  }
+}
+dialog {
+  position: fixed;
+  margin: auto;
+  padding: 1rem;
+  border: none;
+  background-color: var(--dialog);
+  color: var(--text);
+  box-shadow: 1px 1px 4px rgba(128, 128, 128, 0.5);
+
+  /* Animation */
+  --dialog-duration: 160ms;
+
+  transition: opacity var(--dialog-duration) ease-out,
+    scale var(--dialog-duration) ease-out,
+    display var(--dialog-duration) ease-out allow-discrete;
+
+  scale: 0.96;
+  opacity: 0;
+}
+dialog::backdrop {
+  background: rgba(128, 128, 128, 0.5);
+}
+dialog[open]::backdrop {
+  animation: backdrop-in 150ms ease-out;
+}
+
+dialog[open] {
+  opacity: 1;
+  scale: 1;
+
+  @starting-style {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.button-secondary {
+  background-color: var(--button-secondary);
+  color: var(--text-button-secondary);
+  border: 1px solid var(--text-button-secondary);
+}
+.button-secondary:hover {
+  background-color: var(--button-secondary-hover);
+  color: var(--text-button-secondary-hover);
+}
+.button-danger {
+  background-color: var(--button-danger);
+  color: var(--text-button-danger);
+  border: 1px solid var(--text-button-danger);
+}
+.button-danger:hover {
+  background-color: var(--button-danger-hover);
+  color: var(--text-button-danger-hover);
+}
+.button-small {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+}
+.error-message {
+  font-size: 0.8rem;
+  color: var(--text-error);
+}
