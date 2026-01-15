@@ -7,12 +7,12 @@ export default function ReportsPagination() {
     pagination;
 
   return (
-    <>
+    <div className="pagination">
       <small>
         Showing {reportsToShow} of {totalReports} reports
       </small>
       {totalPages > 1 && (
-        <div>
+        <div className="pagination-buttons">
           <Button
             className="button-secondary button-small"
             onClick={() => handlePageChange(page === 1 ? totalPages : page - 1)}
@@ -28,6 +28,6 @@ export default function ReportsPagination() {
           </Button>
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -35,10 +35,10 @@ export const LoginPage = () => {
   };
 
   return (
-    <section>
+    <section className="main-layout">
       <a href="/reports">← Back to reports</a>
       <Form form={form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="login-form" onSubmit={form.handleSubmit(onSubmit)}>
           <Form.Field
             control={form.control}
             name="email"
@@ -69,7 +69,9 @@ export const LoginPage = () => {
               </Form.Item>
             )}
           />
-          <Button disabled={isPending}>Login</Button>
+          <Button className="login-button" disabled={isPending}>
+            Login
+          </Button>
         </form>
       </Form>
       {error && <p>{error.response.data.message}</p>}

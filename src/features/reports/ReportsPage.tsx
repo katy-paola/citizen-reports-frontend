@@ -19,8 +19,10 @@ export const ReportsPage = () => {
   return (
     <Reports>
       <Reports.Header>
-        <h1>Reports</h1>
-        <a href="/login">Are you an admin? Log in here.</a>
+        <div className="reports-header-info">
+          <h1>Reports</h1>
+          <a href="/login">Are you an admin? Log in here.</a>
+        </div>
         <Button onClick={() => setShowCreateModal(true)}>
           Create new report
         </Button>
@@ -31,10 +33,12 @@ export const ReportsPage = () => {
       </Reports.Header>
       <Reports.Content>
         <ReportsPagination />
-        <ul>
+        <ul className="reports-list">
           {data?.reports.map((report: ReportEntity) => (
             <Report key={report.id}>
-              <Report.Title>{report.title}</Report.Title>
+              <Report.Header>
+                <Report.Title>{report.title}</Report.Title>
+              </Report.Header>
               <Report.Description>{report.description}</Report.Description>
               <Report.Status statusValue={report.status}>
                 {report.status}

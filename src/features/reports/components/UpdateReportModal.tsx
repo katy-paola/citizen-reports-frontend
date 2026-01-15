@@ -65,7 +65,7 @@ function UpdateReportFormUI({
 
   return (
     <Form form={form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="modal-content" onSubmit={form.handleSubmit(onSubmit)}>
         <h2>Update report</h2>
 
         <h3>{report.title}</h3>
@@ -88,20 +88,22 @@ function UpdateReportFormUI({
           )}
         />
 
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Saving..." : "Save"}
-        </Button>
-        <Button className="button-secondary" type="button" onClick={close}>
-          Close
-        </Button>
-        <Button
-          className="button-secondary"
-          type="button"
-          onMouseDown={(e) => e.preventDefault()}
-          onClick={() => form.reset()}
-        >
-          Clear
-        </Button>
+        <div className="buttons-group">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Saving..." : "Save"}
+          </Button>
+          <Button
+            className="button-secondary"
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => form.reset()}
+          >
+            Clear
+          </Button>
+          <Button className="button-secondary" type="button" onClick={close}>
+            Close
+          </Button>
+        </div>
         {isError && <p>Something went wrong</p>}
       </form>
     </Form>

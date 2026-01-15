@@ -1,7 +1,11 @@
 import { type ComponentPropsWithoutRef } from "react";
 
 const ReportItem = (props: ComponentPropsWithoutRef<"li">) => {
-  return <li {...props} />;
+  return <li className="report-item" {...props} />;
+};
+
+const ReportHeader = (props: ComponentPropsWithoutRef<"header">) => {
+  return <header className="report-header" {...props} />;
 };
 
 const ReportTitle = (props: ComponentPropsWithoutRef<"h3">) => {
@@ -35,6 +39,7 @@ const ReportDate = (props: ComponentPropsWithoutRef<"small">) => {
 };
 
 const ReportItemComponent = Object.assign(ReportItem, {
+  Header: ReportHeader,
   Title: ReportTitle,
   Description: ReportDescription,
   Status: ReportStatus,

@@ -43,22 +43,26 @@ function DeleteConfirmationContent({
   };
 
   return (
-    <div>
+    <div className="modal-content">
       <h3>{report.title}</h3>
-      <p>Are you sure you want to delete this report?</p>
-      <p>This action cannot be undone.</p>
+      <div>
+        <p>Are you sure you want to delete this report?</p>
+        <p>This action cannot be undone.</p>
+      </div>
 
-      <Button
-        className="button-danger"
-        onClick={handleDelete}
-        disabled={isPending}
-      >
-        {isPending ? "Deleting..." : "Yes, Delete"}
-      </Button>
+      <div className="buttons-group buttons-group-delete">
+        <Button
+          className="button-danger"
+          onClick={handleDelete}
+          disabled={isPending}
+        >
+          {isPending ? "Deleting..." : "Yes, Delete"}
+        </Button>
 
-      <Button type="button" onClick={close}>
-        No, cancel
-      </Button>
+        <Button type="button" onClick={close}>
+          No, cancel
+        </Button>
+      </div>
     </div>
   );
 }

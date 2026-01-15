@@ -48,7 +48,8 @@ function CreateReportFormUI() {
   };
   return (
     <Form form={form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="modal-content" onSubmit={form.handleSubmit(onSubmit)}>
+        <h2>Create new report</h2>
         <Form.Field
           control={form.control}
           name="title"
@@ -83,19 +84,21 @@ function CreateReportFormUI() {
             </Form.Item>
           )}
         />
-        <Button type="submit" disabled={isPending}>
-          {isPending ? "Creating..." : "Create"}
-        </Button>
-        <Button className="button-secondary" type="button" onClick={close}>
-          Close
-        </Button>
-        <Button
-          className="button-secondary"
-          type="button"
-          onClick={() => form.reset()}
-        >
-          Clear
-        </Button>
+        <div className="buttons-group">
+          <Button type="submit" disabled={isPending}>
+            {isPending ? "Creating..." : "Create"}
+          </Button>
+          <Button
+            className="button-secondary"
+            type="button"
+            onClick={() => form.reset()}
+          >
+            Clear
+          </Button>
+          <Button className="button-secondary" type="button" onClick={close}>
+            Close
+          </Button>
+        </div>
         {isError && <p>Something went wrong</p>}
       </form>
     </Form>

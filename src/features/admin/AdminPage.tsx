@@ -35,64 +35,63 @@ export const AdminPage = () => {
   if (isError) return <div>Error loading reports</div>;
 
   return (
-    <div>
-      <Reports>
-        <Reports.Header>
+    <Reports>
+      <Reports.Header>
+        <div className="reports-header-info">
           <h1>Reports</h1>
           <p>
             As admin, you cannot create any report, you can only update them and
             delete them.
           </p>
-          <Button
-            className="button-secondary button-small"
-            handleClick={logout}
-          >
-            Logout
-          </Button>
-        </Reports.Header>
-        <Reports.Content>
-          <ReportsPagination />
-          <ul>
-            {reports.map((report: ReportEntity) => (
-              <Report key={report.id}>
+        </div>
+        <Button className="button-secondary button-small" handleClick={logout}>
+          Logout
+        </Button>
+      </Reports.Header>
+      <Reports.Content>
+        <ReportsPagination />
+        <ul className="reports-list">
+          {reports.map((report: ReportEntity) => (
+            <Report key={report.id}>
+              <Report.Header>
                 <Report.Title>{report.title}</Report.Title>
-                <Report.Description>{report.description}</Report.Description>
-                <div>
-                  <Report.Status statusValue={report.status}>
-                    {report.status}
-                  </Report.Status>
-                  <Button
-                    className="button-secondary button-small"
-                    onClick={() => handleUpdateModal(report)}
-                  >
-                    Edit
-                  </Button>
-                </div>
-
-                <Report.Date>{formatDate(report.createdAt)}</Report.Date>
                 <Button
                   className="button-danger button-small"
                   onClick={() => handleDeleteModal(report)}
                 >
                   Delete report
                 </Button>
-              </Report>
-            ))}
-          </ul>
-          <UpdateReportModal
-            reportId={reportToUpdateId}
-            reports={reports}
-            showModal={showUpdateModal}
-            setShowModal={setShowUpdateModal}
-          />
-          <DeleteConfirmationModal
-            reportId={reportToDeleteId}
-            reports={reports}
-            showModal={showDeleteModal}
-            setShowModal={setShowDeleteModal}
-          />
-        </Reports.Content>
-      </Reports>
-    </div>
+              </Report.Header>
+              <Report.Description>{report.description}</Report.Description>
+              <div className="status-container">
+                <Report.Status statusValue={report.status}>
+                  {report.status}
+                </Report.Status>
+                <Button
+                  className="button-secondary button-small"
+                  onClick={() => handleUpdateModal(report)}
+                >
+                  Edit status
+                </Button>
+              </div>
+
+              <Report.Date>{formatDate(report.createdAt)}</Report.Date>
+            </Report>
+          ))}
+        </ul>
+        <UpdateReportModal
+          reportId={reportToUpdateId}
+          reports={reports}
+          showModal={showUpdateModal}
+          setShowModal={setShowUpdateModal}
+        />
+        <DeleteConfirmationModal
+          reportId={reportToDeleteId}
+          reports={reports}
+          showModal={showDeleteModal}
+          setShowModal={setShowDeleteModal}
+        />
+      </Reports.Content>
+    </Reports>
   );
 };
