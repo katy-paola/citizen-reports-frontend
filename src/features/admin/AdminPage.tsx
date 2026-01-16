@@ -43,10 +43,10 @@ export const AdminPage = () => {
     <Reports>
       <Reports.Header>
         <div className="reports-header-info">
-          <h1>Reports</h1>
+          <h1>Community Reports</h1>
           <p>
-            As admin, you cannot create any report, you can only update them and
-            delete them.
+            Manage reported issues submitted by citizens. As admin, you can
+            update the status or remove invalid reports.
           </p>
         </div>
         <Button className="button-secondary button-small" handleClick={logout}>
