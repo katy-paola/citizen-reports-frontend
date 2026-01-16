@@ -10,8 +10,15 @@ import Button from "../../shared/components/Button";
 
 export const ReportsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
 
-  const { data, isLoading, isError } = usePaginatedReports();
+  const { data, isLoading, isError, refetch } = usePaginatedReports();
+
+  const handleManualReload = async () => {
+    setIsManualReloading(true);
+    await refetch();
+    setIsManualReloading(false);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading reports</div>;
@@ -32,7 +39,16 @@ export const ReportsPage = () => {
         />
       </Reports.Header>
       <Reports.Content>
-        <ReportsPagination />
+        <div className="reports-content-actions">
+          <Button
+            className="button-secondary button-small"
+            onClick={handleManualReload}
+            disabled={isManualReloading}
+          >
+            {isManualReloading ? "Reloading..." : "Reload"}
+          </Button>
+          <ReportsPagination />
+        </div>
         <ul className="reports-list">
           {data?.reports.map((report: ReportEntity) => (
             <Report key={report.id}>
