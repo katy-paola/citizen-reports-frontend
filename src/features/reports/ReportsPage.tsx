@@ -11,6 +11,9 @@ import Button from "../../shared/components/Button";
 export const ReportsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
+  const [lastRefreshDate, setLastRefreshDate] = useState<string | Date>(
+    new Date()
+  );
 
   const { data, isLoading, isError, refetch } = usePaginatedReports();
   const reports = data?.reports ?? [];
@@ -19,6 +22,7 @@ export const ReportsPage = () => {
     setIsManualReloading(true);
     await refetch();
     setIsManualReloading(false);
+    setLastRefreshDate(formatDate(new Date()));
   };
 
   return (
@@ -41,13 +45,16 @@ export const ReportsPage = () => {
       </Reports.Header>
       <Reports.Content>
         <div className="reports-content-actions">
-          <Button
-            className="button-secondary button-small"
-            onClick={handleManualReload}
-            disabled={isManualReloading || isLoading || reports.length === 0}
-          >
-            {isManualReloading ? "Reloading..." : "Reload"}
-          </Button>
+          <div className="reports-content-reload">
+            <Button
+              className="button-secondary button-small"
+              onClick={handleManualReload}
+              disabled={isManualReloading || isLoading || reports.length === 0}
+            >
+              {isManualReloading ? "Reloading..." : "Reload"}
+            </Button>
+            <small>Last refresh: {lastRefreshDate.toLocaleString()}</small>
+          </div>
           <ReportsPagination />
         </div>
 

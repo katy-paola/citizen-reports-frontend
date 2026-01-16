@@ -82,7 +82,9 @@ input {
 }
 /* Prevent Chrome autofill styles by delaying them indefinitely */
 input:-webkit-autofill {
-  transition: background-color 0s 600000s, color 0s 600000s;
+  transition:
+    background-color 0s 600000s,
+    color 0s 600000s;
 }
 input:focus {
   border-color: var(--button-primary);
@@ -201,7 +203,8 @@ dialog {
   /* Animation */
   --dialog-duration: 160ms;
 
-  transition: opacity var(--dialog-duration) ease-out,
+  transition:
+    opacity var(--dialog-duration) ease-out,
     scale var(--dialog-duration) ease-out,
     display var(--dialog-duration) ease-out allow-discrete;
 
@@ -244,6 +247,7 @@ dialog[open] {
 ==========================================*/
 .pagination {
   display: flex;
+  
   justify-content: space-between;
   align-items: center;
   gap: 1rem;

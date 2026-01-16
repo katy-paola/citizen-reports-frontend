@@ -17,7 +17,14 @@
 }
 .reports-content-actions {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 2rem;
+}
+.reports-content-reload {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .reports-list {
   padding: 1rem;

@@ -19,6 +19,9 @@ export const AdminPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
+  const [lastRefreshDate, setLastRefreshDate] = useState<string | Date>(
+    new Date()
+  );
 
   const { data, isLoading, isError, refetch } = usePaginatedReports();
   const reports = data?.reports ?? [];
@@ -27,6 +30,7 @@ export const AdminPage = () => {
     setIsManualReloading(true);
     await refetch();
     setIsManualReloading(false);
+    setLastRefreshDate(formatDate(new Date()));
   };
 
   const handleUpdateModal = (report: ReportEntity) => {
@@ -55,13 +59,16 @@ export const AdminPage = () => {
       </Reports.Header>
       <Reports.Content>
         <div className="reports-content-actions">
-          <Button
-            className="button-secondary button-small"
-            onClick={handleManualReload}
-            disabled={isManualReloading || isLoading || reports.length === 0}
-          >
-            {isManualReloading ? "Reloading..." : "Reload"}
-          </Button>
+          <div className="reports-content-reload">
+            <Button
+              className="button-secondary button-small"
+              onClick={handleManualReload}
+              disabled={isManualReloading || isLoading || reports.length === 0}
+            >
+              {isManualReloading ? "Reloading..." : "Reload"}
+            </Button>
+            <small>Last refresh: {lastRefreshDate.toLocaleString()}</small>
+          </div>
           <ReportsPagination />
         </div>
 
