@@ -6,5 +6,6 @@ export const useGetReports = (page: number, limit: number = 10) => {
     queryKey: ["reports", page, limit],
     queryFn: () => getReports(page, limit),
     placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
   });
 };

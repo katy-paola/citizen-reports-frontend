@@ -18,8 +18,16 @@ export const AdminPage = () => {
   const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const { data, isLoading, isError } = usePaginatedReports();
+  const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
+
+  const { data, isLoading, isError, refetch } = usePaginatedReports();
   const reports = data?.reports ?? [];
+
+  const handleManualReload = async () => {
+    setIsManualReloading(true);
+    await refetch();
+    setIsManualReloading(false);
+  };
 
   const handleUpdateModal = (report: ReportEntity) => {
     setReportToUpdateId(report.id);
@@ -30,9 +38,6 @@ export const AdminPage = () => {
     setReportToDeleteId(report.id);
     setShowDeleteModal(true);
   };
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading reports</div>;
 
   return (
     <Reports>
@@ -49,48 +54,65 @@ export const AdminPage = () => {
         </Button>
       </Reports.Header>
       <Reports.Content>
-        <ReportsPagination />
-        <ul className="reports-list">
-          {reports.map((report: ReportEntity) => (
-            <Report key={report.id}>
-              <Report.Header>
-                <Report.Title>{report.title}</Report.Title>
-                <Button
-                  className="button-danger button-small"
-                  onClick={() => handleDeleteModal(report)}
-                >
-                  Delete report
-                </Button>
-              </Report.Header>
-              <Report.Description>{report.description}</Report.Description>
-              <div className="status-container">
-                <Report.Status statusValue={report.status}>
-                  {report.status}
-                </Report.Status>
-                <Button
-                  className="button-secondary button-small"
-                  onClick={() => handleUpdateModal(report)}
-                >
-                  Edit status
-                </Button>
-              </div>
+        <div className="reports-content-actions">
+          <Button
+            className="button-secondary button-small"
+            onClick={handleManualReload}
+            disabled={isManualReloading}
+          >
+            {isManualReloading ? "Reloading..." : "Reload"}
+          </Button>
+          <ReportsPagination />
+        </div>
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : isError ? (
+          <div>Error loading reports</div>
+        ) : (
+          <>
+            <ul className="reports-list">
+              {reports.map((report: ReportEntity) => (
+                <Report key={report.id}>
+                  <Report.Header>
+                    <Report.Title>{report.title}</Report.Title>
+                    <Button
+                      className="button-danger button-small"
+                      onClick={() => handleDeleteModal(report)}
+                    >
+                      Delete report
+                    </Button>
+                  </Report.Header>
+                  <Report.Description>{report.description}</Report.Description>
+                  <div className="status-container">
+                    <Report.Status statusValue={report.status}>
+                      {report.status}
+                    </Report.Status>
+                    <Button
+                      className="button-secondary button-small"
+                      onClick={() => handleUpdateModal(report)}
+                    >
+                      Edit status
+                    </Button>
+                  </div>
 
-              <Report.Date>{formatDate(report.createdAt)}</Report.Date>
-            </Report>
-          ))}
-        </ul>
-        <UpdateReportModal
-          reportId={reportToUpdateId}
-          reports={reports}
-          showModal={showUpdateModal}
-          setShowModal={setShowUpdateModal}
-        />
-        <DeleteConfirmationModal
-          reportId={reportToDeleteId}
-          reports={reports}
-          showModal={showDeleteModal}
-          setShowModal={setShowDeleteModal}
-        />
+                  <Report.Date>{formatDate(report.createdAt)}</Report.Date>
+                </Report>
+              ))}
+            </ul>
+            <UpdateReportModal
+              reportId={reportToUpdateId}
+              reports={reports}
+              showModal={showUpdateModal}
+              setShowModal={setShowUpdateModal}
+            />
+            <DeleteConfirmationModal
+              reportId={reportToDeleteId}
+              reports={reports}
+              showModal={showDeleteModal}
+              setShowModal={setShowDeleteModal}
+            />
+          </>
+        )}
       </Reports.Content>
     </Reports>
   );

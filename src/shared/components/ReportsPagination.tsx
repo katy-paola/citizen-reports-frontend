@@ -9,7 +9,8 @@ export default function ReportsPagination() {
   return (
     <div className="pagination">
       <small>
-        Showing {reportsToShow} of {totalReports} reports
+        Showing {reportsToShow ? reportsToShow : 0} of{" "}
+        {totalReports ? totalReports : 0} reports
       </small>
       {totalPages > 1 && (
         <div className="pagination-buttons">

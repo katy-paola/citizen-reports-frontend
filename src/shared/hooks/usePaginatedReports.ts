@@ -3,7 +3,7 @@ import { usePagination } from "./usePagination";
 
 export const usePaginatedReports = () => {
   const { page, limit, handlePageChange } = usePagination();
-  const { data, isLoading, isError } = useGetReports(page, limit);
+  const { data, isLoading, isError, refetch } = useGetReports(page, limit);
 
   const totalPages = data?.meta.totalPages ?? 1;
 
@@ -11,6 +11,7 @@ export const usePaginatedReports = () => {
     data,
     isLoading,
     isError,
+    refetch,
     pagination: {
       page,
       totalPages,
