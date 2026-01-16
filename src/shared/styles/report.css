@@ -2,10 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: start;
+  gap: 2rem;
 }
 .reports-header-info {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 .reports-list,
 .reports-content {

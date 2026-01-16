@@ -64,55 +64,64 @@ export const AdminPage = () => {
           </Button>
           <ReportsPagination />
         </div>
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : isError ? (
-          <div>Error loading reports</div>
-        ) : (
-          <>
-            <ul className="reports-list">
-              {reports.map((report: ReportEntity) => (
-                <Report key={report.id}>
-                  <Report.Header>
-                    <Report.Title>{report.title}</Report.Title>
-                    <Button
-                      className="button-danger button-small"
-                      onClick={() => handleDeleteModal(report)}
-                    >
-                      Delete report
-                    </Button>
-                  </Report.Header>
-                  <Report.Description>{report.description}</Report.Description>
-                  <div className="status-container">
-                    <Report.Status statusValue={report.status}>
-                      {report.status}
-                    </Report.Status>
-                    <Button
-                      className="button-secondary button-small"
-                      onClick={() => handleUpdateModal(report)}
-                    >
-                      Edit status
-                    </Button>
-                  </div>
 
-                  <Report.Date>{formatDate(report.createdAt)}</Report.Date>
-                </Report>
-              ))}
-            </ul>
-            <UpdateReportModal
-              reportId={reportToUpdateId}
-              reports={reports}
-              showModal={showUpdateModal}
-              setShowModal={setShowUpdateModal}
-            />
-            <DeleteConfirmationModal
-              reportId={reportToDeleteId}
-              reports={reports}
-              showModal={showDeleteModal}
-              setShowModal={setShowDeleteModal}
-            />
-          </>
-        )}
+        <ul className="reports-list">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : isError ? (
+            <p>
+              We couldn't load the reports. Please check your internet
+              connection and try again.
+            </p>
+          ) : reports.length === 0 ? (
+            <>
+              <p>
+                No reports found. Be the first to report an issue in your
+                community.
+              </p>
+            </>
+          ) : (
+            reports.map((report: ReportEntity) => (
+              <Report key={report.id}>
+                <Report.Header>
+                  <Report.Title>{report.title}</Report.Title>
+                  <Button
+                    className="button-danger button-small"
+                    onClick={() => handleDeleteModal(report)}
+                  >
+                    Delete report
+                  </Button>
+                </Report.Header>
+                <Report.Description>{report.description}</Report.Description>
+                <div className="status-container">
+                  <Report.Status statusValue={report.status}>
+                    {report.status}
+                  </Report.Status>
+                  <Button
+                    className="button-secondary button-small"
+                    onClick={() => handleUpdateModal(report)}
+                  >
+                    Edit status
+                  </Button>
+                </div>
+
+                <Report.Date>{formatDate(report.createdAt)}</Report.Date>
+              </Report>
+            ))
+          )}
+        </ul>
+        <UpdateReportModal
+          reportId={reportToUpdateId}
+          reports={reports}
+          showModal={showUpdateModal}
+          setShowModal={setShowUpdateModal}
+        />
+        <DeleteConfirmationModal
+          reportId={reportToDeleteId}
+          reports={reports}
+          showModal={showDeleteModal}
+          setShowModal={setShowDeleteModal}
+        />
       </Reports.Content>
     </Reports>
   );
