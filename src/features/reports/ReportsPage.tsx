@@ -44,7 +44,7 @@ export const ReportsPage = () => {
           <Button
             className="button-secondary button-small"
             onClick={handleManualReload}
-            disabled={isManualReloading || reports.length === 0}
+            disabled={isManualReloading || isLoading || reports.length === 0}
           >
             {isManualReloading ? "Reloading..." : "Reload"}
           </Button>
