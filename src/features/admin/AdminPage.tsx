@@ -20,7 +20,7 @@ export const AdminPage = () => {
 
   const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
   const [lastRefreshDate, setLastRefreshDate] = useState<string | Date>(
-    new Date()
+    new Date(),
   );
 
   const { data, isLoading, isError, refetch } = usePaginatedReports();
@@ -67,7 +67,7 @@ export const AdminPage = () => {
             >
               {isManualReloading ? "Reloading..." : "Reload"}
             </Button>
-            <small>Last refresh: {lastRefreshDate.toLocaleString()}</small>
+            <small>Last refresh: {formatDate(lastRefreshDate)}</small>
           </div>
           <ReportsPagination />
         </div>
