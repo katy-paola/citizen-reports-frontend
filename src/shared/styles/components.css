@@ -198,7 +198,7 @@ dialog {
   border: none;
   background-color: var(--dialog);
   color: var(--text);
-  box-shadow: 1px 1px 4px rgba(128, 128, 128, 0.5);
+  box-shadow: 1px 1px 4px var(--shadow);
 
   /* Animation */
   --dialog-duration: 160ms;
@@ -212,7 +212,7 @@ dialog {
   opacity: 0;
 }
 dialog::backdrop {
-  background: rgba(128, 128, 128, 0.5);
+  background: var(--shadow);
 }
 dialog[open]::backdrop {
   animation: backdrop-in 150ms ease-out;
@@ -247,7 +247,7 @@ dialog[open] {
 ==========================================*/
 .pagination {
   display: flex;
-  
+
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
@@ -255,4 +255,43 @@ dialog[open] {
 .pagination-buttons {
   display: flex;
   gap: 0.5rem;
+}
+
+/*==========================================
+ Toast
+==========================================*/
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  color: var(--text);
+  border: 1px solid transparent;
+  backdrop-filter: blur(4px);
+  box-shadow: 1px 1px 6px var(--shadow);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+.toast-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.toast-info {
+  background-color: var(--info);
+  border-color: var(--info-border);
+}
+.toast-success {
+  background-color: var(--success);
+  border-color: var(--success-border);
+}
+.toast-error {
+  background-color: var(--error);
+  border-color: var(--error-border);
 }

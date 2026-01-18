@@ -7,12 +7,13 @@ import { usePaginatedReports } from "../../shared/hooks/usePaginatedReports";
 import ReportsPagination from "../../shared/components/ReportsPagination";
 import { Report } from "../../shared/components/ReportItem";
 import Button from "../../shared/components/Button";
+import { toast } from "../../shared/utils/toast";
 
 export const ReportsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
   const [lastRefreshDate, setLastRefreshDate] = useState<string | Date>(
-    new Date()
+    new Date(),
   );
 
   const { data, isLoading, isError, refetch } = usePaginatedReports();
@@ -23,6 +24,7 @@ export const ReportsPage = () => {
     await refetch();
     setIsManualReloading(false);
     setLastRefreshDate(formatDate(new Date()));
+    toast.success("Reports reloaded");
   };
 
   return (

@@ -15,23 +15,23 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/reports" replace />} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="/reports" replace />} />
 
-          <Route element={<NonAdminRoute />}>
-            <Route path="/reports" element={<ReportsPage />} />
-          </Route>
+            <Route element={<NonAdminRoute />}>
+              <Route path="/reports" element={<ReportsPage />} />
+            </Route>
 
-          <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<AdminPage />} />
-          </Route>
+            <Route element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
 
-          <Route element={<NonAdminRoute />}>
-            <Route path="/login" element={<LoginPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route element={<NonAdminRoute />}>
+              <Route path="/login" element={<LoginPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
     </QueryClientProvider>
   );
 }

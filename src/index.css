@@ -4,6 +4,7 @@
   --text: oklch(35.233% 0.00004 271.152);
   --text-error: oklch(43.295% 0.17767 29.223);
   --text-link: oklch(35.528% 0.15318 270.877);
+  --shadow: oklch(59.987% 0.00007 271.152 / 0.5);
 
   --button-primary: oklch(44.411% 0.1919 261.807);
   --button-primary-hover: oklch(40.555% 0.1744 261.852);
@@ -36,6 +37,14 @@
   --pending-border: oklch(84.545% 0.18263 108.378);
   --process-border: oklch(51.423% 0.27143 266.51);
   --resolved-border: oklch(78.301% 0.22507 148.285);
+
+  /* Toast colors */
+  --info: oklch(51.423% 0.27143 266.51 / 0.1);
+  --info-border: oklch(51.423% 0.27143 266.51);
+  --success: oklch(78.301% 0.22507 148.285 / 0.1);
+  --success-border: oklch(78.301% 0.22507 148.285);
+  --error: oklch(62.179% 0.24525 28.374 / 0.1);
+  --error-border: oklch(62.179% 0.24525 28.374);
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
