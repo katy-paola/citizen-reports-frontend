@@ -3,6 +3,7 @@ import Button from "../../../shared/components/Button";
 import { Dialog } from "../../../shared/components/Dialog";
 import { useDialog } from "../../../shared/context/dialogContext";
 import type { ReportEntity } from "../types";
+import { toast } from "../../../shared/utils/toast";
 
 export default function DeleteConfirmationModal({
   reportId,
@@ -38,7 +39,13 @@ function DeleteConfirmationContent({
 
   const handleDelete = () => {
     deleteReport(undefined, {
-      onSuccess: close,
+      onSuccess: () => {
+        close();
+        toast.info("Report deleted");
+      },
+      onError: () => {
+        toast.error("Error deleting report");
+      },
     });
   };
 

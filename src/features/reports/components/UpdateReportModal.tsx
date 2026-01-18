@@ -12,6 +12,7 @@ import { Select } from "../../../shared/components/Select";
 import { useDialog } from "../../../shared/context/dialogContext";
 import { Dialog } from "../../../shared/components/Dialog";
 import { useEffect } from "react";
+import { toast } from "../../../shared/utils/toast";
 
 export default function UpdateReportModal({
   reportId,
@@ -60,7 +61,18 @@ function UpdateReportFormUI({
   }, [report, form]);
 
   const onSubmit = (data: UpdateReportForm) => {
-    update({ status: data.status }, { onSuccess: close });
+    update(
+      { status: data.status },
+      {
+        onSuccess: () => {
+          close();
+          toast.success("Report updated successfully");
+        },
+        onError: () => {
+          toast.error("Error updating report");
+        },
+      },
+    );
   };
 
   return (

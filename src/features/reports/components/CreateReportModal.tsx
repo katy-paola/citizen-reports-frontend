@@ -10,6 +10,7 @@ import { Form } from "../../../shared/components/FormWrapper";
 import { Input } from "../../../shared/components/Input";
 import { Dialog } from "../../../shared/components/Dialog";
 import { useDialog } from "../../../shared/context/dialogContext";
+import { toast } from "../../../shared/utils/toast";
 
 export default function CreateReportModal({
   showModal,
@@ -42,8 +43,14 @@ function CreateReportFormUI() {
     create(
       { title: data.title, description: data.description },
       {
-        onSuccess: close,
-      }
+        onSuccess: () => {
+          close();
+          toast.success("Report created successfully");
+        },
+        onError: () => {
+          toast.error("Error creating report");
+        },
+      },
     );
   };
   return (
