@@ -63,7 +63,11 @@ export const AdminPage = () => {
             <Button
               className="button-secondary button-small"
               onClick={handleManualReload}
-              disabled={isManualReloading || isLoading || reports.length === 0}
+              disabled={
+                isManualReloading ||
+                isLoading ||
+                (reports.length === 0 && !isError)
+              }
             >
               {isManualReloading ? "Reloading..." : "Reload"}
             </Button>
