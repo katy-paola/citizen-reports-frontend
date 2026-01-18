@@ -4,26 +4,15 @@ import CreateReportModal from "./components/CreateReportModal";
 import type { ReportEntity } from "./types";
 import { Reports } from "../../shared/components/Reports";
 import { usePaginatedReports } from "../../shared/hooks/usePaginatedReports";
-import ReportsPagination from "../../shared/components/ReportsPagination";
 import { Report } from "../../shared/components/ReportItem";
 import Button from "../../shared/components/Button";
+import ReportsListHeader from "../../shared/components/ReportsListHeader";
 
 export const ReportsPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
-  const [lastRefreshDate, setLastRefreshDate] = useState<string | Date>(
-    new Date(),
-  );
 
   const { data, isLoading, isError, refetch } = usePaginatedReports();
   const reports = data?.reports ?? [];
-
-  const handleManualReload = async () => {
-    setIsManualReloading(true);
-    await refetch();
-    setIsManualReloading(false);
-    setLastRefreshDate(formatDate(new Date()));
-  };
 
   return (
     <Reports>
@@ -44,19 +33,7 @@ export const ReportsPage = () => {
         />
       </Reports.Header>
       <Reports.Content>
-        <div className="reports-content-actions">
-          <div className="reports-content-reload">
-            <Button
-              className="button-secondary button-small"
-              onClick={handleManualReload}
-              disabled={isManualReloading || isLoading || reports.length === 0}
-            >
-              {isManualReloading ? "Reloading..." : "Reload"}
-            </Button>
-            <small>Last refresh: {lastRefreshDate.toLocaleString()}</small>
-          </div>
-          <ReportsPagination />
-        </div>
+        <ReportsListHeader data={{ reports, isLoading, isError, refetch }} />
 
         <ul className="reports-list">
           {isLoading ? (

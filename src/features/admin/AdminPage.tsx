@@ -6,9 +6,9 @@ import DeleteConfirmationModal from "../reports/components/DeleteConfirmationMod
 import { useLogout } from "../auth/hooks/useLogout";
 import { Reports } from "../../shared/components/Reports";
 import { Report } from "../../shared/components/ReportItem";
-import ReportsPagination from "../../shared/components/ReportsPagination";
 import { usePaginatedReports } from "../../shared/hooks/usePaginatedReports";
 import Button from "../../shared/components/Button";
+import ReportsListHeader from "../../shared/components/ReportsListHeader";
 
 export const AdminPage = () => {
   const logout = useLogout();
@@ -18,20 +18,8 @@ export const AdminPage = () => {
   const [reportToDeleteId, setReportToDeleteId] = useState<number | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const [isManualReloading, setIsManualReloading] = useState<boolean>(false);
-  const [lastRefreshDate, setLastRefreshDate] = useState<string | Date>(
-    new Date(),
-  );
-
   const { data, isLoading, isError, refetch } = usePaginatedReports();
   const reports = data?.reports ?? [];
-
-  const handleManualReload = async () => {
-    setIsManualReloading(true);
-    await refetch();
-    setIsManualReloading(false);
-    setLastRefreshDate(formatDate(new Date()));
-  };
 
   const handleUpdateModal = (report: ReportEntity) => {
     setReportToUpdateId(report.id);
@@ -58,23 +46,7 @@ export const AdminPage = () => {
         </Button>
       </Reports.Header>
       <Reports.Content>
-        <div className="reports-content-actions">
-          <div className="reports-content-reload">
-            <Button
-              className="button-secondary button-small"
-              onClick={handleManualReload}
-              disabled={
-                isManualReloading ||
-                isLoading ||
-                (reports.length === 0 && !isError)
-              }
-            >
-              {isManualReloading ? "Reloading..." : "Reload"}
-            </Button>
-            <small>Last refresh: {formatDate(lastRefreshDate)}</small>
-          </div>
-          <ReportsPagination />
-        </div>
+        <ReportsListHeader data={{ reports, isLoading, isError, refetch }} />
 
         <ul className="reports-list">
           {isLoading ? (
