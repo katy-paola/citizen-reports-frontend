@@ -44,7 +44,7 @@ function UpdateReportFormUI({
   reportStatus: Status;
 }) {
   const { close } = useDialog();
-  const { mutate: update, isPending, isError } = useUpdateReport(report.id);
+  const { mutate: update, isPending, error } = useUpdateReport(report.id);
 
   const form = useForm<UpdateReportForm>({
     resolver: zodResolver(updateReportSchema),
@@ -116,7 +116,7 @@ function UpdateReportFormUI({
             Close
           </Button>
         </div>
-        {isError && <p>Something went wrong</p>}
+        {error && <p>Something went wrong: {error.message}</p>}
       </form>
     </Form>
   );

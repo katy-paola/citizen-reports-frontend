@@ -35,7 +35,7 @@ function DeleteConfirmationContent({
   report: ReportEntity;
 }) {
   const { close } = useDialog();
-  const { mutate: deleteReport, isPending } = useDeleteReport(reportId);
+  const { mutate: deleteReport, isPending, error } = useDeleteReport(reportId);
 
   const handleDelete = () => {
     deleteReport(undefined, {
@@ -70,6 +70,7 @@ function DeleteConfirmationContent({
           No, cancel
         </Button>
       </div>
+      {error && <p>Something went wrong: {error.message}</p>}
     </div>
   );
 }

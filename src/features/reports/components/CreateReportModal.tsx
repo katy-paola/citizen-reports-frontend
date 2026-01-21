@@ -28,7 +28,7 @@ export default function CreateReportModal({
 
 function CreateReportFormUI() {
   const { close } = useDialog();
-  const { mutate: create, isPending, isError } = useCreateReport();
+  const { mutate: create, isPending, error } = useCreateReport();
 
   const form = useForm<CreateReportForm>({
     resolver: zodResolver(createReportSchema),
@@ -106,7 +106,7 @@ function CreateReportFormUI() {
             Close
           </Button>
         </div>
-        {isError && <p>Something went wrong</p>}
+        {error && <p>Something went wrong: {error.message}</p>}
       </form>
     </Form>
   );
