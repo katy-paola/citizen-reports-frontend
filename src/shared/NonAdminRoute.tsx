@@ -1,8 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { isAdminSession } from "../features/auth/authSession";
+import { useAdminSession } from "../features/auth/hooks/useAdminSession";
 
 export const NonAdminRoute = () => {
-  if (isAdminSession()) {
+  const { isSuccess } = useAdminSession();
+  if (isSuccess) {
     return <Navigate to="/admin" replace />;
   }
 

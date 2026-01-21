@@ -1,5 +1,5 @@
-import { tokenStorage } from "../utils/tokenStorage";
+import { authApi } from "../../../api/authApi";
 
-export const logout = () => {
-  tokenStorage.clear();
+export const logout = async () => {
+  await authApi.logout();
 };

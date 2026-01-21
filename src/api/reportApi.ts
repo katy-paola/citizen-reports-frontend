@@ -5,6 +5,7 @@ import type {
   ReportsResponse,
   UpdateReportDto,
 } from "../features/reports/types";
+import { getCsrfToken } from "../shared/utils/csrf";
 
 export const reportApi = {
   getReports: (page: number = 1, limit: number = 10) =>
@@ -21,9 +22,22 @@ export const reportApi = {
     }),
 
   updateReport: (id: number, payload: UpdateReportDto) =>
-    client.put<ReportEntity>(`/reports/${id}`, {
-      status: payload.status,
-    }),
+    client.put<ReportEntity>(
+      `/reports/${id}`,
+      {
+        status: payload.status,
+      },
+      {
+        headers: {
+          "x-csrf-token": getCsrfToken() ?? "",
+        },
+      },
+    ),
 
-  deleteReport: (id: number) => client.delete<ReportEntity>(`/reports/${id}`),
+  deleteReport: (id: number) =>
+    client.delete<ReportEntity>(`/reports/${id}`, {
+      headers: {
+        "x-csrf-token": getCsrfToken() ?? "",
+      },
+    }),
 };

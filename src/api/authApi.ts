@@ -7,4 +7,6 @@ export const authApi = {
       email: payload.email,
       password: payload.password,
     }),
+
+  logout: () => client.post("/auth/logout"),
 };
