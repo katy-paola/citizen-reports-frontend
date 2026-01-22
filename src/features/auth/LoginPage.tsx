@@ -30,7 +30,7 @@ export const LoginPage = () => {
         onSuccess: () => {
           navigate("/admin");
         },
-      }
+      },
     );
   };
 
@@ -74,7 +74,7 @@ export const LoginPage = () => {
           </Button>
         </form>
       </Form>
-      {error && <p>{error.response.data.message}</p>}
+      {error && <p>{(error as any).response?.data?.message}</p>}
     </section>
   );
 };
