@@ -69,7 +69,7 @@ export const AdminPage = () => {
                 <Report.Header>
                   <Report.Title>{report.title}</Report.Title>
                   <Button
-                    className="button-danger button-small"
+                    className="button-danger button-small button-delete"
                     onClick={() => handleDeleteModal(report)}
                   >
                     Delete report

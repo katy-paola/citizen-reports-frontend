@@ -33,6 +33,7 @@
   border: 3px solid var(--border-reports);
 }
 .report-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -69,4 +70,19 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+@media screen and (width <= 768px) {
+  .reports-header {
+    flex-direction: column;
+  }
+  .reports-content-reload {
+    flex-direction: row-reverse;
+  }
+}
+
+@media screen and (width <= 430px) {
+  .reports-content {
+    padding-bottom: 1.5rem;
+  }
 }
