@@ -3,9 +3,12 @@ import Button from "./Button";
 
 export default function ReportsPagination() {
   const { pagination, isLoading, isError } = usePaginatedReports();
+  console.log("pagination inside of ReportsPagination component:", pagination);
   if (isLoading || isError || !pagination) return null;
   const { page, totalPages, reportsToShow, totalReports, handlePageChange } =
     pagination;
+
+  console.log("totalPages inside of ReportsPagination component", totalPages);
 
   return (
     <div className="pagination">
