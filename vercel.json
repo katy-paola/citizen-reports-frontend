@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://citizen-reports-backend.onrender.com/api"
+      "destination": "https://citizen-reports-backend.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",
