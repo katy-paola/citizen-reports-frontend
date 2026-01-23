@@ -1,32 +1,28 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
+const API_URL = process.env.API_URL!;
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const backendUrl = process.env.VITE_API_URL as string;
-
-  const targetUrl = backendUrl + req.url!.replace(/^\/api/, "");
-
-  const headers = new Headers();
-
-  for (const [key, value] of Object.entries(req.headers)) {
-    if (typeof value === "string") {
-      headers.set(key, value);
-    }
-  }
+  const targetUrl = `${API_URL}${req.url?.replace("/api", "")}`;
 
   const response = await fetch(targetUrl, {
     method: req.method,
-    headers,
+    headers: {
+      "content-type": req.headers["content-type"] ?? "application/json",
+      cookie: req.headers.cookie ?? "",
+    },
     body:
       req.method !== "GET" && req.method !== "HEAD"
         ? JSON.stringify(req.body)
         : undefined,
   });
 
-  const body = await response.text();
+  const text = await response.text();
 
-  response.headers.forEach((value, key) => {
-    res.setHeader(key, value);
-  });
+  const setCookie = response.headers.get("set-cookie");
+  if (setCookie) {
+    res.setHeader("set-cookie", setCookie);
+  }
 
-  res.status(response.status).send(body);
+  res.status(response.status).send(text);
 }
