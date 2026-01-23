@@ -1,32 +1,24 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const API_URL = process.env.API_URL!;
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const path = Array.isArray(req.query.path) ? req.query.path.join("/") : "";
+  const backendUrl = process.env.BACKEND_URL;
 
-  const targetUrl = `${API_URL}/${path}${
-    req.url?.includes("?") ? "?" + req.url.split("?")[1] : ""
-  }`;
-
-  const response = await fetch(targetUrl, {
-    method: req.method,
-    headers: {
-      "content-type": req.headers["content-type"] ?? "application/json",
-      cookie: req.headers.cookie ?? "",
-    },
-    body:
-      req.method !== "GET" && req.method !== "HEAD"
-        ? JSON.stringify(req.body)
-        : undefined,
-  });
-
-  const body = await response.text();
-
-  const setCookie = response.headers.get("set-cookie");
-  if (setCookie) {
-    res.setHeader("set-cookie", setCookie);
+  if (!backendUrl) {
+    return res.status(500).json({ error: "BACKEND_URL not defined" });
   }
 
-  res.status(response.status).send(body);
+  const rawPath = req.query.path;
+
+  const pathArray = Array.isArray(rawPath) ? rawPath : rawPath ? [rawPath] : [];
+
+  const url = `${backendUrl}/${pathArray.join("/")}`;
+
+  const response = await fetch(url, {
+    method: req.method,
+    headers: { "content-type": "application/json" },
+    body: req.method === "GET" ? undefined : JSON.stringify(req.body),
+  });
+
+  const text = await response.text();
+  res.status(response.status).send(text);
 }
