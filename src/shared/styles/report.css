@@ -75,6 +75,7 @@
 @media screen and (width <= 768px) {
   .reports-header {
     flex-direction: column;
+    gap: 1.5rem;
   }
   .reports-content-reload {
     flex-direction: row-reverse;
@@ -84,5 +85,14 @@
 @media screen and (width <= 430px) {
   .reports-content {
     padding-bottom: 1.5rem;
+  }
+  .reports-content-actions {
+    gap: 1rem;
+  }
+}
+
+@media screen and (width <= 375px) {
+  .report-date {
+    margin-top: 1rem;
   }
 }

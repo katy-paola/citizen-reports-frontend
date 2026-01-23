@@ -2,10 +2,14 @@ import { usePaginatedReports } from "../hooks/usePaginatedReports";
 import Button from "./Button";
 
 export default function ReportsPagination() {
-  const { pagination, isLoading, isError } = usePaginatedReports();
-  if (isLoading || isError || !pagination) return null;
-  const { page, totalPages, reportsToShow, totalReports, handlePageChange } =
-    pagination;
+  const { pagination } = usePaginatedReports();
+  const {
+    page = 1,
+    totalPages = 1,
+    reportsToShow = 0,
+    totalReports = 0,
+    handlePageChange,
+  } = pagination || {};
 
   return (
     <div className="pagination">

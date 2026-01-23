@@ -107,3 +107,12 @@ h3 {
     font-size: 125%;
   }
 }
+@media screen and (width <= 375px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .main-layout {
+    padding-top: 2rem;
+    padding-inline: 1rem;
+  }
+}

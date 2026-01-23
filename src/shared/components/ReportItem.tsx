@@ -35,7 +35,7 @@ const ReportStatus = ({
 };
 
 const ReportDate = (props: ComponentPropsWithoutRef<"small">) => {
-  return <small {...props} />;
+  return <small className="report-date" {...props} />;
 };
 
 const ReportItemComponent = Object.assign(ReportItem, {
