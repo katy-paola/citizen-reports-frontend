@@ -3,7 +3,9 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 const API_URL = process.env.API_URL!;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const targetUrl = `${API_URL}${req.url?.replace("/api", "")}`;
+  const path = req.url?.replace(/^\/api/, "") ?? "";
+
+  const targetUrl = `${API_URL}${path}`;
 
   const response = await fetch(targetUrl, {
     method: req.method,
